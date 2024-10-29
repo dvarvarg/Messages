@@ -1,10 +1,16 @@
 import smtplib
 from email.message import EmailMessage
+from email.utils import parseaddr #для проверки правильности введенного адреса
 from tkinter import *
 
 
+def validate_email(email):
+    name,addr=parseaddr(email) #из электронного сообщения возьмет имя и адрес
+    return '@' in addr and '.' in addr.split('@')[-1]
+
+
 def save():
-    with open('save.txt','w') as file:
+    with open('save.txt','w',encoding='utf-8') as file:
         file.write(sender_email_entry.get()+'\n')
         file.write(recipient_email_entry.get()+'\n')
         file.write(password_entry.get()+'\n')
@@ -12,7 +18,7 @@ def save():
 
 def load():
     try:
-        with open('save.txt','r') as file:
+        with open('save.txt','r',encoding='utf-8') as file:
             info=file.readlines()
             sender_email_entry.insert(0,info[0].strip())
             recipient_email_entry.insert(0,info[1].strip())
@@ -25,6 +31,11 @@ def send_email():
     save()
     sender_email=sender_email_entry.get() # 'Koveshnikova-design@ya.ru'
     recipient_mail=recipient_email_entry.get() #'dvarvarg@gmail.com'
+
+    if not validate_email(sender_email) or not validate_email(recipient_mail):
+        result_label.config(text='Ошибка, неверный формат email')
+        return
+
     password=password_entry.get() #'gtmvvsktiwrchqro'
     subject=subject_entry.get() #'Проверка связи!'
     body=body_text.get(1.0,END) #'Привет из программы на Питоне'
