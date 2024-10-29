@@ -10,6 +10,17 @@ def save():
         file.write(password_entry.get()+'\n')
 
 
+def load():
+    try:
+        with open('save.txt','r') as file:
+            info=file.readlines()
+            sender_email_entry.insert(0,info[0])
+            recipient_email_entry.insert(0,info[1])
+            password_entry.insert(0,info[2])
+    except FileNotFoundError:
+        pass # проигнорировать ошибку
+
+
 def send_email():
     save()
     sender_email=sender_email_entry.get() # 'Koveshnikova-design@ya.ru'
@@ -66,5 +77,7 @@ Button(text='Отправить письмо',font=('Arial',12), command=send_em
 
 result_label=Label(text='',font=('Arial',12))
 result_label.grid(row=6,column=1, sticky=W,pady=3)
+
+load()
 
 window.mainloop()
