@@ -3,7 +3,15 @@ from email.message import EmailMessage
 from tkinter import *
 
 
+def save():
+    with open('save.txt','w') as file:
+        file.write(sender_email_entry.get()+'\n')
+        file.write(recipient_email_entry.get()+'\n')
+        file.write(password_entry.get()+'\n')
+
+
 def send_email():
+    save()
     sender_email=sender_email_entry.get() # 'Koveshnikova-design@ya.ru'
     recipient_mail=recipient_email_entry.get() #'dvarvarg@gmail.com'
     password=password_entry.get() #'gtmvvsktiwrchqro'
@@ -32,31 +40,31 @@ def send_email():
 
 window=Tk()
 window.title('Отправка Email')
-window.geometry('500x300')
+window.geometry('500x400')
 
-Label(text='Отправитель:').grid(row=0,column=0, sticky=W)
-sender_email_entry=Entry()
-sender_email_entry.grid(row=0,column=1, sticky=W)
+Label(text='Отправитель:',font=('Arial',12)).grid(row=0,column=0, sticky=W,pady=3)
+sender_email_entry=Entry(width=30)
+sender_email_entry.grid(row=0,column=1, sticky=W,pady=3)
 
-Label(text='Получатель:').grid(row=1,column=0, sticky=W)
-recipient_email_entry=Entry()
-recipient_email_entry.grid(row=1,column=1, sticky=W)
+Label(text='Получатель:',font=('Arial',12)).grid(row=1,column=0, sticky=W,pady=3)
+recipient_email_entry=Entry(width=30)
+recipient_email_entry.grid(row=1,column=1, sticky=W,pady=3)
 
-Label(text='Пароль приложения:').grid(row=2,column=0, sticky=W)
-password_entry=Entry()
-password_entry.grid(row=2,column=1, sticky=W)
+Label(text='Пароль приложения:',font=('Arial',12)).grid(row=2,column=0, sticky=W,pady=3)
+password_entry=Entry(width=30)
+password_entry.grid(row=2,column=1, sticky=W,pady=3)
 
-Label(text='Тема письма:').grid(row=3,column=0, sticky=W)
-subject_entry=Entry()
-subject_entry.grid(row=3,column=1, sticky=W)
+Label(text='Тема письма:',font=('Arial',12)).grid(row=3,column=0, sticky=W,pady=3)
+subject_entry=Entry(width=30)
+subject_entry.grid(row=3,column=1, sticky=W,pady=3)
 
-Label(text='Сообщение:').grid(row=4,column=0, sticky=W)
-body_text=Text(width=45,height=10)
-body_text.grid(row=4,column=1, sticky=W)
+Label(text='Сообщение:',font=('Arial',12)).grid(row=4,column=0, sticky=W,pady=3)
+body_text=Text(width=40,height=10)
+body_text.grid(row=4,column=1, sticky=W,pady=3)
 
-Button(text='Отправить письмо', command=send_email).grid(row=5,column=1, sticky=W)
+Button(text='Отправить письмо',font=('Arial',12), command=send_email).grid(row=5,column=1, sticky=W,pady=3)
 
-result_label=Label(text='')
-result_label.grid(row=6,column=1, sticky=W)
+result_label=Label(text='',font=('Arial',12))
+result_label.grid(row=6,column=1, sticky=W,pady=3)
 
 window.mainloop()
